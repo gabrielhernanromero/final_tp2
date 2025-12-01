@@ -1,0 +1,19 @@
+{
+  "name": "prueba_final_tp2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type" : "module",
+  "scripts": {
+    "start" : "node .",
+    "dev" : "node --watch .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+    
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
