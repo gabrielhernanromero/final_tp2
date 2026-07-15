@@ -1,16 +1,37 @@
-class controller {
-    constructor(service) {
-        this.service = service;
+class Controller {
+  constructor(procesarLecturaCasoUso, listarSensoresCasoUso, listarAlertasCasoUso) {
+    this.procesarLecturaCasoUso = procesarLecturaCasoUso;
+    this.listarSensoresCasoUso = listarSensoresCasoUso;
+    this.listarAlertasCasoUso = listarAlertasCasoUso;
+  }
+
+  procesarLectura = async (req, res, next) => {
+    try {
+      const { id, tipo, valor, timestamp } = req.body;
+      const { lectura, creado } = await this.procesarLecturaCasoUso.ejecutar({ id, tipo, valor, timestamp });
+      res.status(creado ? 201 : 200).json(lectura);
+    } catch (error) {
+      next(error);
     }
+  };
 
-        getAll= async (req, res) => {
-            try {
-            const data = await this.service.getAll();
-            res.status(200).send(data);
-        }catch (error) {            
-            res.status(400).send({error: error.message});
-        }
-    }    
-}   
+  listarSensores = async (req, res, next) => {
+    try {
+      const sensores = await this.listarSensoresCasoUso.ejecutar();
+      res.status(200).json(sensores);
+    } catch (error) {
+      next(error);
+    }
+  };
 
-export default controller;
+  listarAlertas = async (req, res, next) => {
+    try {
+      const alertas = await this.listarAlertasCasoUso.ejecutar();
+      res.status(200).json(alertas);
+    } catch (error) {
+      next(error);
+    }
+  };
+}
+
+export default Controller;
